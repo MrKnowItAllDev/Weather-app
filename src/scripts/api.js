@@ -32,6 +32,7 @@ export async function getGiphyData(search) {
 
 export async function getWeekData(search) {
     const weekData = await getWeatherData(search);
+    const giphyData = await getGiphyData(search);
     const data = weekData.days.slice(0, 7);
     return data;
 }

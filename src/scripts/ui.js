@@ -11,7 +11,7 @@ export class UIGrabber {
     static #hourlyForecast = () => Array.from(document.querySelectorAll(".hourly-forecast > section"));
     static #forecastCards = () => Array.from(document.querySelectorAll(".forecast-card"));
 
-    static populateHourlyForecast(wData, gData) {
+    static populateHourlyForecast(wData) {
         this.#hourlyForecast().forEach((card, i) => {
             card.innerHTML = ``;
             const header = document.createElement('section');
@@ -30,7 +30,7 @@ export class UIGrabber {
             h2.innerHTML = `${wData.hours[i].temp}` + `&deg;C`;
             p.textContent = `Windspeed ${wData.hours[i].windspeed}`;
 
-            img.src = gData.data.images.original.url;
+            img.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${wData.icon}.png`;
             img.alt = `weather-icon`;
             img.style.width = `90px`;
             img.style.height = `120px`;
@@ -50,12 +50,12 @@ export class UIGrabber {
     static #populateGifDisplay(data) {
         this.#weatherIcon().innerHTML = ``;
         const img = document.createElement('img');
-        img.src = data.data.images.original.url;
+        img.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${data.icon}.png`;
         img.alt = `weather-icon`;
         this.#weatherIcon().appendChild(img);
     }
 
-    static populateMainDisplay(wData, gData) {
+    static populateMainDisplay(wData) {
         const cityName = this.#cityName();
         const cityDate = this.#cityDate();
         const cityTemp = this.#cityTemp();
@@ -74,11 +74,10 @@ export class UIGrabber {
         cityWeather.querySelector('.weather-type:nth-child(2)').innerHTML = `L - ${wData.tempmin}&deg;`;
         cityWeather.querySelector('.weather-type:nth-child(3)').innerHTML = `H - ${wData.tempmax}&deg;`;
 
-        this.#populateGifDisplay(gData);
+        this.#populateGifDisplay(wData);
     }
 
-    // Pass in api data to populate fields
-    static populateDailyDisplayInfo(wData, gData) {
+    static populateDailyDisplayInfo(wData) {
         this.#forecastCards().forEach((card, i) => {
             card.innerHTML = ``;
             const header = document.createElement('section');
@@ -94,11 +93,11 @@ export class UIGrabber {
             img.style.width = `90%`;
 
             h2.textContent = `${new Date(wData[i].datetime).toDateString().split(' ')[0]}`;
-            img.src = `${gData.data.images.original.url}`;
+            img.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${wData[i].icon}.png`;
             img.alt = `weather-icon`;
             header2.innerHTML = `${wData[i].temp}&deg;`;
             header2.style.textDecoration = `1px solid #ffffff`;
-            p.innerHTML = `H - ${wData[i].tempmax}&deg; L - ${wData[i].tempmin}&deg;`;
+            p.innerHTML = `${wData[i].icon}`;
 
             header.appendChild(h2);
             icon.appendChild(img);

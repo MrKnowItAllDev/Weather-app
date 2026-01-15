@@ -20,7 +20,7 @@ export class Controller {
                 let giphy = await getGiphyData(searchTerm);
                 let weekly = await getWeekData(searchTerm);
 
-                this.#UI.populateMainDisplay(weather, giphy);
+                this.#UI.populateMainDisplay(weather);
                 this.#UI.populateHourlyForecast(weather, giphy);
                 this.#UI.populateDailyDisplayInfo(weekly, giphy);
             } catch(err) {
@@ -29,7 +29,15 @@ export class Controller {
         });
     }
 
-    static init() {
+    static async init() {
+        let searchTerm = "Durban";
+        let weather = await getMainData(searchTerm);
+        let giphy = await getGiphyData(searchTerm);
+        let weekly = await getWeekData(searchTerm);
+
+        this.#UI.populateMainDisplay(weather, giphy);
+        this.#UI.populateHourlyForecast(weather, giphy);
+        this.#UI.populateDailyDisplayInfo(weekly, giphy);
         this.getWeather();
     }
 }
