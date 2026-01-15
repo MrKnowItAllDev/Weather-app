@@ -17,12 +17,11 @@ export class Controller {
             try {
                 if (!searchTerm) return;
                 let weather = await getMainData(searchTerm);
-                let giphy = await getGiphyData(searchTerm);
                 let weekly = await getWeekData(searchTerm);
 
                 this.#UI.populateMainDisplay(weather);
-                this.#UI.populateHourlyForecast(weather, giphy);
-                this.#UI.populateDailyDisplayInfo(weekly, giphy);
+                this.#UI.populateHourlyForecast(weather);
+                this.#UI.populateDailyDisplayInfo(weekly);
             } catch(err) {
                 throw new Error(err);
             }
